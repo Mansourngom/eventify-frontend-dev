@@ -4,7 +4,7 @@ const API = axios.create({
     baseURL: 'http://127.0.0.1:8000/api',
 });
 
-// Ajoute automatiquement le token JWT à chaque requête
+// Ajoute automatiquement le token JWT a chaque requete.
 API.interceptors.request.use((config) => {
     const token = localStorage.getItem('access_token');
     if (token) {
@@ -18,7 +18,7 @@ export const register = (data) => API.post('/register/', data);
 export const login = (data) => API.post('/token/', data);
 export const getMe = () => API.get('/me/');
 
-// Événements
+// Evenements
 export const getEvents = () => API.get('/events/');
 export const getEvent = (id) => API.get(`/events/${id}/`);
 export const createEvent = (data) => API.post('/events/', data);

@@ -8,8 +8,8 @@ function Home() {
 
     useEffect(() => {
         getEvents()
-            .then(res => setEvents(res.data))
-            .catch(err => console.error(err))
+            .then((res) => setEvents(res.data))
+            .catch((err) => console.error(err))
             .finally(() => setLoading(false));
     }, []);
 
@@ -22,16 +22,16 @@ function Home() {
                 <p>Aucun événement disponible pour le moment.</p>
             ) : (
                 <div className="events-grid">
-                    {events.map(event => (
+                    {events.map((event) => (
                         <div key={event.id} className="event-card">
                             {event.image && (
                                 <img src={`http://127.0.0.1:8000${event.image}`} alt={event.title} />
                             )}
                             <div className="event-info">
                                 <h3>{event.title}</h3>
-                                <p>📍 {event.location}</p>
-                                <p>📅 {new Date(event.date).toLocaleDateString('fr-FR')}</p>
-                                <p>👥 {event.registrations_count} inscrit(s)</p>
+                                <p>Lieu: {event.location}</p>
+                                <p>Date: {new Date(event.date).toLocaleDateString('fr-FR')}</p>
+                                <p>Participants: {event.registrations_count} inscrit(s)</p>
                                 <Link to={`/events/${event.id}`}>Voir détails</Link>
                             </div>
                         </div>
