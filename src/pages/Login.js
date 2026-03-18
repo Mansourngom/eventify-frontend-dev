@@ -1,7 +1,6 @@
 ﻿import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { showToast } from '../components/Toast';
 
 export default function Login() {
   const { login } = useAuth();
@@ -13,15 +12,17 @@ export default function Login() {
   const onChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const onSubmit = async e => {
-    e.preventDefault(); setError(''); setLoading(true);
+    e.preventDefault();
+    setError('');
+    setLoading(true);
     try {
       const user = await login(form.email, form.password);
-      showToast(`Bienvenue ${user.first_name} ! 👋`, 'success');
       navigate(user.role === 'organizer' ? '/dashboard' : '/');
     } catch {
       setError('Email ou mot de passe incorrect.');
-      showToast('Identifiants incorrects ❌', 'error');
-    } finally { setLoading(false); }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,6 +63,12 @@ export default function Login() {
 
       {/* DROITE */}
       <div className="auth-right">
+
+        {/* BOUTON RETOUR */}
+        <Link to="/" style={{ display:'inline-flex', alignItems:'center', gap:'6px', fontSize:'13px', color:'var(--muted)', textDecoration:'none', marginBottom:'24px', padding:'7px 14px', borderRadius:'10px', border:'1.5px solid var(--border)', background:'white', transition:'all 0.2s' }}>
+          ← Retour à l'accueil
+        </Link>
+
         <Link to="/" className="navbar-logo" style={{ marginBottom:'32px' }}>
           <div className="logo-icon">E</div>
           <span className="logo-text">Eventify</span>
@@ -77,7 +84,7 @@ export default function Login() {
         <form onSubmit={onSubmit} style={{ display:'flex', flexDirection:'column', gap:'16px' }} className="animate-fadeUp delay-1">
           <div className="form-group">
             <label className="form-label">Email</label>
-            <input type="email" name="email" placeholder="vous@exemple.com" value={form.email} onChange={onChange} required className="form-input"/>
+            <input type="text" name="email" placeholder="vous@exemple.com" value={form.email} onChange={onChange} required className="form-input"/>
           </div>
           <div className="form-group">
             <label className="form-label">Mot de passe</label>
